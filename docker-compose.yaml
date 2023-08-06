@@ -1,8 +1,12 @@
-version: '3.8'
+version: '3.3'
 
 services:
-  web:
+  django:
+    container_name: django
     image: wanted_pre_onboarding_backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - '8000:8000'
     volumes:
@@ -18,9 +22,10 @@ mysqldb:
   ports:
     - '3306:3306'
   environment:
-    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    - MYSQL_DATABASE=${MYSQL_DATABASE}
-    - MYSQL_USER=${MYSQL_USER}
-    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    MYSQL_USER: ${MYSQL_USER}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    TZ: Asia/Seoul
   volumes:
     - db_data:/var/lib/mysql
