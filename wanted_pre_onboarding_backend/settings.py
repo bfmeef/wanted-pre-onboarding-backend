@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # 설치한 라이브러리
     "rest_framework",
+    "rest_framework_simplejwt",
 
+    # 생성한 앱
     "accounts",
 ]
 
