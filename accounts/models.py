@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(BaseUserManager):
@@ -8,6 +9,11 @@ class CustomUserManager(BaseUserManager):
             raise ValueError("이메일은 반드시 입력되어야 합니다.")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
+
+        if password:
+            if len(password) < 8:
+                raise ValidationError("비밀번호는 최소 8자 이상이어야 합니다.")
+
         user.set_password(password)
         user.save(using=self.db)
         return user
@@ -19,4 +25,3 @@ class CustomUser(AbstractBaseUser, PermissionError):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    
